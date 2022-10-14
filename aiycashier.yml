@@ -1,0 +1,596 @@
+openapi: '3.0.2'
+info:
+  title: AIYCASHIER API
+  version: '1.0'
+servers:
+  - url: http://localhost:3000
+paths:
+  /register:
+    post:
+      requestBody:
+        description: 'login user'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+  /login:
+    post:
+      requestBody:
+        description: 'login user'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'    
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultLogin'
+
+  /shop/{token}:
+    get:
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetShop'
+    post:
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 'membuat toko baru'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shop'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shop'
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shop'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultUpdateShop'
+      
+  /users/{token}:
+    get:
+      description: 'mengambil semua user berdasarkam toko id'
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    post:
+      description: 'menambahkan user baru di toko'
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataUser'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultAddUser'
+        
+  /users/{id}/{token}:
+    get:
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      requestBody:
+        description: 'update data user'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataUser'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultUpdateUser'
+    delete:
+      parameters:
+          - name: token
+            in: path
+            required: true
+            schema:
+              type: string
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultDeleteUser'
+
+  /employe/{token}:
+    get:
+      description: 'mengambil semua user berdasarkam toko id'
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    post:
+      description: 'menambahkan user baru di toko'
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataUser'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultAddUser'
+
+  /employe/{id}/{token}:
+    get:
+      description: 'mengambil semua user berdasarkam toko id'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    
+  /items/{token}:
+    get:
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            description: 'token dari localstorage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemsAll'
+    post:
+      description: 'menambah item baru'
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            description: 'token dari localstorage'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataItems'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultAddItem'
+        
+
+  /items/{id}/{token}:
+    get:
+      description: 'mengambil item bedasarkan id'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            description: 'ambil token dari localstorage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemsAll'
+    put:
+      description: 'mengubah data item'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            description: 'ambil token dari localstorage'
+      requestBody:
+        description: 'isi value dengan data yang ingin diubah'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataItems'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultUpdateItem'
+    delete:
+      parameters:
+            - name: token
+              in: path
+              required: true
+              schema:
+                type: string
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: string
+      description: 'menghapus item'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultDeleteItem'
+
+components:
+  schemas:
+    DataUser:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: 'server'
+        nama:
+          type: string
+          example: 'iqbal al ayyubi'
+        username:
+          type: string
+          example: iqbal123
+        alamat:
+          type: string
+          example: 'jl.poliklinik no 1'
+        no_hp:
+          type: string
+          example: '08123456789'
+        profile:
+          type: string
+          example: 'www.profilepath.png'
+          description: 'file gambar'
+        toko_id:
+          type: string
+          example: 'SCtPAB21'
+          description: 'server'
+
+    User:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'akun berhasil dibuat'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+        data:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/DataUser'
+          
+    DataItems:
+      type: object
+      properties:
+        nama:
+          type: string
+        kategori:
+          type: string
+        satuan:
+          type: string
+        modal:
+          type: number
+          example: 500
+        harga:
+          type: number
+          example: 1000
+        stok:
+          type: number
+          example: 10
+    
+    ItemsAll:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'item ditemukan'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+        data:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/DataItems'
+
+    Register:
+      type: object
+      properties:
+        username:
+          type: string
+          example: 'iqbal123'
+        password:
+          type: string
+          example: '123'
+
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+          example: 'iqbal123'
+        password:
+          type: string
+          example: '123'
+
+    Shop:
+      type: object
+      properties:
+        nama:
+          type: string
+          example: 'sumber jaya abadi'
+        alamat:
+          type: string
+          example: 'jl.jemur andayani'
+
+    GetShop:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'data toko berhasil ditemukan'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+
+    ResultLogin:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'berhasil login'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+        token:
+          type: string
+          description: 'dari server berisi username,toko_id,role,id'
+
+    ResultUpdateShop:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'toko berhasil diubah'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+
+    ResultUpdateUser:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'data user berhasil diubah'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+
+    ResultDeleteUser:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'user berhasil dihapus'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+
+    ResultAddItem:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'item berhasil ditambahkan'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+    
+    ResultUpdateItem:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'item berhasil diubah'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+
+    ResultDeleteItem:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'item berhasil dihapus'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+
+    Result:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'akun berhasil dibuat'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+
+    ResultAddUser:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: 'akun user berhasil dibuat'
+        status:
+          type: string
+          example: 'berhasil'
+        isSuccess:
+          type: boolean
+          example: true
+    
