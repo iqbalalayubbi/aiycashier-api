@@ -12,7 +12,7 @@ require('./config/db')
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(cors({origin:'*'}))
+app.use(cors({origin:'https://new-aiycashier.netlify.app'}))
 
 // router
 const regRouter = require('./router/register');
