@@ -23,6 +23,7 @@ ItemRouter.get('/:token',async(req,res) => {
 ItemRouter.get('/:id/:token',async(req,res) => {
     const {id,token} = req.params
     const result = checkToken(token)
+    console.log(result.response,id)
     if (result.isSuccess){
         const toko_id = result.response
         const item = await itemId(parseInt(id),toko_id)
