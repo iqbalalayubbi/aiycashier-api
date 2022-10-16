@@ -3,14 +3,13 @@ const jwt = require('jsonwebtoken');
 const logRouter = require('express').Router();
 const {checkUser,checkEmploye} = require('../validation/checkPass')
 const secret = process.env.SECRET_KEY
-const Employe = require('../models/Employe');
-const { employUser } = require('../utils/getEmploye');
+const { employUsername } = require('../utils/getEmploye');
 
 logRouter.post('/',async(req,res) => {
     const {username,password} = req.body    
     const user = await getUsername(username)
     const userValid = await checkUser(username,password)
-    const resEmploye = await employUser(username)
+    const resEmploye = await employUsername(username)
     const employe = resEmploye.data[0]
     const employeValid = await checkEmploye(username,password)
 
@@ -20,7 +19,6 @@ logRouter.post('/',async(req,res) => {
         res.statusCode = 200
         res.json(response('berhasil login','berhasil',true,token,user.isNew))
     }else if(employeValid){
-        console.log(employe)
         const token = createToken(employe.id,employe.username,employe.role,employe.toko_id)
         res.statusCode = 200
         res.json(response('berhasil login','berhasil',true,token))
