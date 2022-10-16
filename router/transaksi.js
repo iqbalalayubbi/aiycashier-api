@@ -15,8 +15,9 @@ transRouter.get('/:token',async(req,res) => {
 })
 
 transRouter.post('/:token',async(req,res) => {
-    const items = req.body.data
+    const items = req.body
     const data = jwt.verify(req.params.token, secret);
+    console.log(items)
     const item = {
         tanggal:formatTime(),
         toko_id:data.toko_id,

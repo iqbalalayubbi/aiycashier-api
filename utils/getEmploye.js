@@ -12,7 +12,7 @@ async function getEmployes(toko_id){
 }   
 
 // employ by id
-async function employUser(username){
+async function employUsername(username){
     const result = await Employe.where('username','==',username).get()
     const employe = []
     result.forEach(doc => employe.push(doc.data()))
@@ -25,4 +25,4 @@ function response(msg,status,isSuccess,data = []){
     return {msg,status,isSuccess,data}
 }
 
-module.exports = {getEmployes,employUser}
+module.exports = {getEmployes,employUsername}

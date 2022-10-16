@@ -1,8 +1,9 @@
 const employRouter = require('express').Router();
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET_KEY
-const createEmploye = require('../utils/createEmploy')
-const {getEmployes,employId} = require('../utils/getEmploye');
+const createEmploye = require('../utils/createEmploy');
+const deleteEmploye = require('../utils/deleteEmploye');
+const {getEmployes,employUsername} = require('../utils/getEmploye');
 const checkToken = require('../validation/checkToken');
 
 // get all employe
@@ -16,11 +17,22 @@ employRouter.get('/:token',async(req,res) => {
     }
 })
 
-employRouter.get('/:id/:token',async(req,res) => {
-    const {id,token} = req.params
+employRouter.get('/:username/:token',async(req,res) => {
+    const {username,token} = req.params
     const result = checkToken(token)
     if (result.isSuccess){
-        const response = await employId(req.params.id)
+        const response = await employUsername(username)
+        return res.json(response)  
+    }
+    return res.json(result.response)
+})
+
+// delete employe
+employRouter.delete('/:username/:token',async(req,res) => {
+    const {username,token} = req.params
+    const result = checkToken(token)
+    if (result.isSuccess){
+        const response = await deleteEmploye(username)
         return res.json(response)  
     }
     return res.json(result.response)
