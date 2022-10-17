@@ -6,24 +6,11 @@ chartRouter.get('/:token',async(req,res) => {
     const toko_id = checkToken(req.params.token).response
     const result = await Transaksi.where('toko_id','==',toko_id).get()
     const trans = []
-    const allDate = []
-    const data = []
-    result.forEach(doc => trans.push(doc.data()))
-    trans.forEach(tr =>{
-        const date = tr.tanggal.split(' ')[0]
-        if (!allDate.includes(date)) allDate.push(date)
-    })
-
-    const tanggal = '17/09/2022'
-    trans.forEach(tr =>{
-        const date = tr.tanggal.split(' ')[0]
-        if (tanggal == date) data.push(tr.items)
-    })
-
     let untung = 0
-    data.forEach(m => {
-        m.forEach(d => {
-            untung +=  parseInt(d.total) - (parseInt(d.jumlah)*parseInt(d.modal))
+    result.forEach(doc => trans.push(doc.data()))
+    trans.forEach(data => {
+        data.items.forEach(item => {
+            untung += item.total -  (parseInt(item.modal) * parseInt(item.jumlah))
         })
     })
     res.json({untung})

@@ -21,7 +21,7 @@ transRouter.get('/:token',async(req,res) => {
 
 transRouter.post('/:token',async(req,res) => {
     const items = req.body
-    const time = `${moment().format('L')} ${moment().format('LTS')}`
+    const time = moment().format('D/M/YYYY HH:mm:ss')
     const data = jwt.verify(req.params.token, secret);
     const item = {
         tanggal:time,
