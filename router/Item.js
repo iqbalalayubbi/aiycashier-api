@@ -2,7 +2,7 @@ const createItem = require('../utils/createItem');
 const ItemRouter = require('express').Router();
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET_KEY
-const {getItems,itemId} = require('../utils/getItem');
+const {getItems,itemId, getItemsTotal} = require('../utils/getItem');
 const deleteItem = require('../utils/deleteItem');
 const checkToken = require('../validation/checkToken');
 const updateItem = require('../utils/updateItem');
@@ -13,6 +13,18 @@ ItemRouter.get('/:token',async(req,res) => {
         const result = checkToken(req.params.token)
         const toko_id = result.response
         const response = await getItems(toko_id)
+        res.json(response)
+    } catch (error) {   
+        res.json(error)
+    }
+})
+
+// get item total
+ItemRouter.get('/total/:token',async(req,res) => {
+    try {
+        const result = checkToken(req.params.token)
+        const toko_id = result.response
+        const response = await getItemsTotal(toko_id)
         res.json(response)
     } catch (error) {   
         res.json(error)

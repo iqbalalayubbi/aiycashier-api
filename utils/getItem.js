@@ -11,6 +11,11 @@ async function getItems(toko_id){
     // return items
 }
 
+async function getItemsTotal(toko_id){
+    const result = await Item.where('toko_id','==',toko_id).get()
+    return {total:result.size}
+}
+
 async function itemId(id,toko_id){
     const items = []
     const response = await Item.where('id','==',id).get()
@@ -27,4 +32,4 @@ function response(msg,status,isSuccess,data){
     return {msg,status,isSuccess,data}
 }
 
-module.exports = {getItems,itemId}
+module.exports = {getItems,itemId,getItemsTotal}

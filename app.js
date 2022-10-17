@@ -23,6 +23,7 @@ const employRouter = require('./router/employe');
 const shopRouter = require('./router/shop');
 const tokenRouter = require('./router/Token');
 const userRouter = require('./router/user');
+const chartRouter = require('./router/chart');
 
 app.use('/register',regRouter)
 app.use('/login',logRouter)
@@ -30,7 +31,8 @@ app.use('/transaksi',transRouter)
 app.use('/items',itemRouter)
 app.use('/employe',employRouter)
 app.use('/shop',shopRouter)
-app.use('/',tokenRouter)
+app.use('/chart',chartRouter)
 app.use('/user',userRouter)
+app.use('/',tokenRouter)
 
 app.listen(port,() => console.log(`server is running on port ${port}`))
