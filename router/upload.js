@@ -19,25 +19,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage:storage});
-// yang butuh foto
-// profile pribadi 
-// employe
-// users
-// items
-// shop
 
-// ,upload.single('image')
-// uploadRouter.post('/',upload.single('image'),async (req,res) => {
-//     const file = req.query.id
-//     // const url = await uploadFile(`./${file.path}`,`items/${file.filename}`);
-//     // const selfLink = url.selfLink.split('/')[8]
-//     // const tokenUrl = url.metadata.firebaseStorageDownloadTokens
-//     // const newUrl = `https://firebasestorage.googleapis.com/v0/b/vue-firebase-263de.appspot.com/o/${selfLink}?alt=media&token=${tokenUrl}`
-
-//     // res.json(newUrle)
-//     console.log(file)
-//     res.json(file)
-// })
 
 uploadRouter.post('/:type/:token',upload.single('image'),async (req,res) => {
     try {
@@ -51,9 +33,6 @@ uploadRouter.post('/:type/:token',upload.single('image'),async (req,res) => {
         const tokenUrl = url.metadata.firebaseStorageDownloadTokens
         const newUrl = `https://firebasestorage.googleapis.com/v0/b/vue-firebase-263de.appspot.com/o/${selfLink}?alt=media&token=${tokenUrl}`
         
-        // const result = await User.where('username','==',username).get()
-        // res.json(checkToken(token).data)
-        // result.forEach(doc => User.doc(doc.id).update({image:newUrl}))
         if (type == 'user'){
             if (role == 'admin'){
                 const result = await User.where('username','==',username).get()
