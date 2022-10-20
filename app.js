@@ -25,6 +25,7 @@ const tokenRouter = require('./router/Token');
 const userRouter = require('./router/user');
 const chartRouter = require('./router/chart');
 const uploadRouter = require('./router/upload');
+const validateRouter = require('./router/Validate');
 
 app.use('/register',regRouter)
 app.use('/login',logRouter)
@@ -35,6 +36,7 @@ app.use('/shop',shopRouter)
 app.use('/chart',chartRouter)
 app.use('/user',userRouter)
 app.use('/upload',uploadRouter)
+app.use('/validate',validateRouter)
 app.use('/',tokenRouter)
 
 app.listen(port,() => console.log(`server is running on port ${port}`))
