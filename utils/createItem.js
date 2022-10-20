@@ -20,15 +20,15 @@ async function createItem(body,token){
             toko_id:result.response
         }
         await Item.add(item)
-        return response('barang berhasil ditambahkan','berhasil',true)
+        return response('barang berhasil ditambahkan','berhasil',true,item.id)
     }else{
         return result.response
     }
 }
 
 
-function response(msg,status,isSuccess){
-    return {msg,status,isSuccess}
+function response(msg,status,isSuccess,id=''){
+    return {msg,status,isSuccess,id}
 }
 
 module.exports = createItem

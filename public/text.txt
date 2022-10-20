@@ -1,0 +1,55 @@
+tht
+
+
+"kind": "storage#object",
+  "id": "vue-firebase-263de.appspot.com/items/1666110766508.jpg/1666110770265469",
+  "selfLink": "https://www.googleapis.com/storage/v1/b/vue-firebase-263de.appspot.com/o/items%2F1666110766508.jpg",
+  "mediaLink": "https://storage.googleapis.com/download/storage/v1/b/vue-firebase-263de.appspot.com/o/items%2F1666110766508.jpg?generation=1666110770265469&alt=media",
+  "name": "items/1666110766508.jpg",
+  "bucket": "vue-firebase-263de.appspot.com",
+  "generation": "1666110770265469",
+  "metageneration": "1",
+  "contentType": "image/png",
+  "storageClass": "STANDARD",
+  "size": 189827,
+  "md5Hash": "h+2jy6luc9fBAhXVzCYQoQ==",
+  "contentEncoding": "gzip",
+  "cacheControl": "public,max-age=31536000",
+  "crc32c": "DW1rJA==",
+  "etag": "CP36+KSa6voCEAE=",
+  "timeCreated": "2022-10-18T16:32:50.267Z",
+  "updated": "2022-10-18T16:32:50.267Z",
+  "timeStorageClassUpdated": "2022-10-18T16:32:50.267Z",
+  "metadata": {
+    "firebaseStorageDownloadTokens": "c4c63baf-7794-4aa2-b0e6-603506bfe900"
+  }
+
+"kind": "storage#object",
+  "id": "vue-firebase-263de.appspot.com/items/1666110960338.jpg/1666110962578266",
+  "selfLink": "https://www.googleapis.com/storage/v1/b/vue-firebase-263de.appspot.com/o/items%2F1666110960338.jpg",
+  "mediaLink": "https://storage.googleapis.com/download/storage/v1/b/vue-firebase-263de.appspot.com/o/items%2F1666110960338.jpg?generation=1666110962578266&alt=media",
+  "name": "items/1666110960338.jpg",
+  "bucket": "vue-firebase-263de.appspot.com",
+  "generation": "1666110962578266",
+  "metageneration": "1",
+  "contentType": "image/png",
+  "storageClass": "STANDARD",
+  "size": 56446,
+  "md5Hash": "5PphpFqmpN1X9i8hLuVyyw==",
+  "contentEncoding": "gzip",
+  "cacheControl": "public,max-age=31536000",
+  "crc32c": "yXuDjQ==",
+  "etag": "CNrm0oCb6voCEAE=",
+  "timeCreated": "2022-10-18T16:36:02.580Z",
+  "updated": "2022-10-18T16:36:02.580Z",
+  "timeStorageClassUpdated": "2022-10-18T16:36:02.580Z",
+  "metadata": {
+    "firebaseStorageDownloadTokens": "a6213da4-dd20-456a-bac4-8d24ea65a535"
+  }
+
+
+https://firebasestorage.googleapis.com/v0/b/vue-firebase-263de.appspot.com/o/items%2F1666110766508.jpg?alt=media&token=c4c63baf-7794-4aa2-b0e6-603506bfe900
+
+https://firebasestorage.googleapis.com/v0/b/vue-firebase-263de.appspot.com/o/items%2F1666110960338.jpg?alt=media&token=a6213da4-dd20-456a-bac4-8d24ea65a535
+
+const template  = 'https://firebasestorage.googleapis.com/v0/b/vue-firebase-263de.appspot.com/o/'

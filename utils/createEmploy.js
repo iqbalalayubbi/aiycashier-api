@@ -10,7 +10,7 @@ async function createEmploye(body,toko_id){
     const employe = {
         id : await getCountEmploy(toko_id)+1,
         username:body.username,
-        name:body.username,
+        nama:body.username,
         no_hp:'08123456789',
         role:body.role,
         password:hash,

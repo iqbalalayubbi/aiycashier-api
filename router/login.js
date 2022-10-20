@@ -14,7 +14,6 @@ logRouter.post('/',async(req,res) => {
         const employe = resEmploye.data[0]
         const employeValid = await checkEmploye(username,password)
         if (userValid){
-            console.log(user)
             const token = createToken(user.id,user.username,user.role,user.toko_id)
             res.statusCode = 200
             res.json(response('berhasil login','berhasil',true,token,user.isNew))

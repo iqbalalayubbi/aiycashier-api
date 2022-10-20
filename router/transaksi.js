@@ -2,6 +2,7 @@ const transRouter = require('express').Router();
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET_KEY
 const Transaksi = require('../models/Transaksi')
+const Item = require('../models/Item')
 const moment = require('moment')
 
 transRouter.get('/:token',async(req,res) => {
@@ -21,6 +22,18 @@ transRouter.get('/:token',async(req,res) => {
 
 transRouter.post('/:token',async(req,res) => {
     const items = req.body
+    console.log(items)
+    const itemData = await Item.get()
+
+    items.forEach(item => {
+        itemData.forEach(ite =>{
+            const daItem = ite.data()
+            if (item.id == daItem.id){
+                Item.doc(ite.id).update({stok:daItem.stok - item.jumlah})
+            }
+        })
+    })
+
     const time = moment().format('D/M/YYYY HH:mm:ss')
     const data = jwt.verify(req.params.token, secret);
     const item = {
@@ -32,38 +45,6 @@ transRouter.post('/:token',async(req,res) => {
     await Transaksi.add(item)
     res.json(response('transaksi ditemukan','berhasil',true))
 })
-
-
-function formatTime(){
-    const time = new Date()
-    let date = [
-        time.getDate(),
-        time.getMonth(),
-        time.getFullYear()
-    ]
-    let timeNow = [
-        time.getHours(),
-        time.getMinutes(),
-        time.getSeconds()
-    ]
-    timeNow.forEach((tm,i) => {
-        if (tm < 10) {
-            const timeArr = tm.toString().split('')
-            timeArr.splice(0,0,0)
-            timeNow[i] = timeArr.join('')
-        }
-    })
-
-    date.forEach((d,i) => {
-        if (d < 10) {
-            const dateArr = d.toString().split('')
-            dateArr.splice(0,0,0)
-            date[i] = dateArr.join('')
-        }
-    })
-
-    return `${date.join('/')} ${timeNow.join(':')}`
-}
 
 function response(msg,status,isSuccess,data = []){
     return {msg,status,isSuccess,data}

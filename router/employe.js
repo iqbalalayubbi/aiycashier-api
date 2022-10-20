@@ -5,6 +5,7 @@ const createEmploye = require('../utils/createEmploy');
 const deleteEmploye = require('../utils/deleteEmploye');
 const {getEmployes,employUsername} = require('../utils/getEmploye');
 const checkToken = require('../validation/checkToken');
+const checkUsername = require('../validation/checkUsername');
 
 // get all employe
 employRouter.get('/:token',async(req,res) => {
@@ -41,13 +42,18 @@ employRouter.delete('/:username/:token',async(req,res) => {
 // add new employe
 employRouter.post('/:token',async(req,res) => {
     const token = req.params.token
-    const body = req.body
-    const result = checkToken(token)
-    if (result.isSuccess){
-        const response = await createEmploye(body,result.response)
-        return res.json(response)
+    const username = req.body.username
+    const userValid = await checkUsername(username)
+    if (userValid.isSuccess){
+        const body = req.body
+        const result = checkToken(token)
+        if (result.isSuccess){
+            const response = await createEmploye(body,result.response)
+            return res.json(response)
+        }
+        return res.json(result.response)
     }
-    return res.json(result.response)
+    return res.json(userValid)
 })
 
 module.exports = employRouter

@@ -22,4 +22,19 @@ userRouter.get('/:token',async (req,res) => {
     }
 })
 
+userRouter.put('/:token',async (req,res) => {
+    const token = req.params.token
+    const result = jwt.verify(token,secret)
+    const {username,role} = result
+    if (role == 'admin'){
+        const response = await User.where('username','==',username).get()
+        response.forEach(doc => User.doc(doc.id).update(req.body))
+        return res.json({msg:'data user berhasil diubah'})
+    }else{
+        const response = await Employe.where('username','==',username).get()
+        response.forEach(doc => Employe.doc(doc.id).update(req.body))
+        return res.json({msg:'data user berhasil diubah'})
+    }
+})
+
 module.exports = userRouter
