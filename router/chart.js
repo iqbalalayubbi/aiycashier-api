@@ -54,26 +54,14 @@ chartRouter.get('/profit/:token',async(req,res) => {
     const trans = []
     const dates = []
     result.forEach(doc => trans.push(doc.data()))
-    trans.forEach(tr => {
-        const exDate = tr.tanggal.split(' ')[0]
-        if (!dates.includes(exDate)) dates.push(exDate)
-    })
 
-    const newTrans = []
-    dates.forEach(date => newTrans.push({tanggal:date,items:[]}))
-
-    newTrans.forEach(newTr => {
-        trans.forEach(tr => {
-            const exDate = tr.tanggal.split(' ')[0]
-            if(exDate == newTr.tanggal){
-                tr.items.forEach(t => {
-                    newTr.items.push(t)
-                })
-            }
-        })
+    trans.forEach(data => {
+        const item = data.items[0]
+        const tanggal = item.tanggal.split(' ')[0]
+        if (!dates.includes(tanggal)) dates.push(tanggal)
     })
-    const allProfit = getProfit(newTrans)
     
+    const allProfit = getProfit(dates,trans)
     res.json(allProfit)
 })
 
@@ -98,33 +86,41 @@ chartRouter.get('/:token',async(req,res) => {
     res.json({untung})
 })
 
-function getProfit(data){
-    // tanggal dan untung
-    // {tanggal:19/10/2022,untung:2000}
-    const dataProfit = []
-    const newTrans = data
-    let untung = 0
-    newTrans.forEach((trans) => {
-        const items = trans.items
-        if (dataProfit.length == 0){
-            const tanggal = trans.tanggal
-            items.forEach(item => {
-                untung += parseInt(item.total) - (parseInt(item.modal) * parseInt(item.jumlah))
-            })
-            dataProfit.push({tanggal,untung})
-        }else{
-            dataProfit.forEach(data => {
-                if(data.tanggal !== trans.tanggal){
-                    const tanggal = trans.tanggal
-                    items.forEach(item => {
-                        untung += parseInt(item.total) - (parseInt(item.modal) * parseInt(item.jumlah))
-                    })
-                    dataProfit.push({tanggal,untung})
-                }
-            })
-        }
+function getProfit(dates,trans){
+    const newProfit = []
+    const allProfit = []
+    dates.forEach(date => {
+        newProfit.push({
+            tanggal:date,
+            untung: 0
+        })
+
+        trans.forEach(data =>{
+            const item = data.items[0]
+            const tanggal = item.tanggal.split(' ')[0]
+    
+            if (tanggal == date){
+                allProfit.push({
+                    tanggal,
+                    untung: parseInt(item.total) - (parseInt(item.modal) * parseInt(item.jumlah))
+                })
+            }
+        })
+        
+        
     })
-    return dataProfit
+
+    newProfit.forEach(profit => {
+        allProfit.forEach(data => {
+            if (data.tanggal == profit.tanggal){
+                profit.untung += data.untung
+            }
+        })
+    })
+
+
+    return newProfit
+    
 }
 
 

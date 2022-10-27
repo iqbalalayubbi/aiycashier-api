@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET_KEY
 const Transaksi = require('../models/Transaksi')
 const Item = require('../models/Item')
-const moment = require('moment')
 
 transRouter.get('/:token',async(req,res) => {
     try {
@@ -32,11 +31,8 @@ transRouter.post('/:token',async(req,res) => {
             }
         })
     })
-    moment.locale('id')
-    const time = moment().format('D/M/YYYY HH:mm:ss')
     const data = jwt.verify(req.params.token, secret);
     const item = {
-        tanggal:time,
         toko_id:data.toko_id,
         user:data.username,
         items
