@@ -1,7 +1,5 @@
 const createItem = require('../utils/createItem');
 const ItemRouter = require('express').Router();
-const jwt = require('jsonwebtoken');
-const secret = process.env.SECRET_KEY
 const {getItems,itemId, getItemsTotal} = require('../utils/getItem');
 const deleteItem = require('../utils/deleteItem');
 const checkToken = require('../validation/checkToken');
@@ -12,9 +10,11 @@ ItemRouter.get('/:token',async(req,res) => {
     try {
         const result = checkToken(req.params.token)
         const toko_id = result.response
-        const response = await getItems(toko_id)
+        const username = result.data.username
+        const role = result.data.role
+        const response = await getItems(toko_id,username,role)
         res.json(response)
-    } catch (error) {   
+    } catch (error) {
         res.json(error)
     }
 })

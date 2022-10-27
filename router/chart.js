@@ -70,7 +70,7 @@ chartRouter.get('/:token',async(req,res) => {
     const result = await Transaksi.where('toko_id','==',toko_id).get()
     const trans = []
     let untung = 0
-
+    // let profit = []
     result.forEach(doc => trans.push(doc.data()))
     try {
         trans.forEach(data => {
@@ -84,6 +84,7 @@ chartRouter.get('/:token',async(req,res) => {
         console.log(error)
     }
     res.json({untung})
+    // res.json(profit)
 })
 
 function getProfit(dates,trans){

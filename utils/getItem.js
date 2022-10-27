@@ -1,13 +1,13 @@
 const Item = require('../models/Item');
 
-async function getItems(toko_id){
+async function getItems(toko_id,username,role){
     const items = []
     const result = await Item.where('toko_id','==',toko_id).get()
     if (result.size == 0) return response('barang masih kosong','berhasil',true,items)
     result.forEach(doc => {
         items.push(doc.data())
     });
-    return response('barang ditemukan','berhasil',true,items)
+    return response('barang ditemukan','berhasil',true,items,username,role)
     // return items
 }
 
@@ -28,8 +28,8 @@ async function itemId(id,toko_id){
     return items
 }
 
-function response(msg,status,isSuccess,data){
-    return {msg,status,isSuccess,data}
+function response(msg,status,isSuccess,data,username,role){
+    return {msg,status,isSuccess,data,username,role}
 }
 
 module.exports = {getItems,itemId,getItemsTotal}
